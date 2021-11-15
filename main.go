@@ -6,7 +6,11 @@ import (
 )
 
 func main() {
-	ctx := kong.Parse(&cli.CLI)
-	err := ctx.Run(&cli.Context{})
+	cliValues := &cli.CLI
+	ctx := kong.Parse(cliValues)
+	err := ctx.Run(&cli.Context{
+		IndentChar: cliValues.IndentChar,
+		IndentNum:  cliValues.IndentNum,
+	})
 	ctx.FatalIfErrorf(err)
 }

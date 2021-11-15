@@ -2,7 +2,7 @@ package gwtparser
 
 import (
 	"gwtcodegen/model"
-	str "gwtcodegen/strings"
+	str "gwtcodegen/gwtstrings"
 	"strings"
 )
 
