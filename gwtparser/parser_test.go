@@ -19,7 +19,7 @@ func TestParse(t *testing.T) {
 			name: "single given, single when, single then",
 			args: args{
 				input:
-					"// given this test input\n" +
+				"// given this test input\n" +
 					"// when this test condition\n" +
 					"// then this test result",
 			},
@@ -40,6 +40,82 @@ func TestParse(t *testing.T) {
 			},
 		},
 		{
+			name: "multiple given, multiple when, multiple then",
+			args: args{
+				input:
+					"// given this test input A\n" +
+					"// when this test condition\n" +
+					"// then this test result A\n" +
+					"// then this test result B\n" +
+					"// when another test condition\n" +
+					"// then this test result C\n" +
+					"// then this test result D\n" +
+					"// given this test input B\n" +
+					"// when this test condition\n" +
+					"// then this test result A\n" +
+					"// then this test result B\n" +
+					"// when another test condition\n" +
+					"// then this test result C\n" +
+					"// then this test result D\n",
+			},
+			want: []model.Given{
+				{
+					Text: "Given this test input A",
+					When: []model.When{
+						{
+							Text: "When this test condition",
+							Then: []model.Then{
+								{
+									Text: "Then this test result A",
+								},
+								{
+									Text: "Then this test result B",
+								},
+							},
+						},
+						{
+							Text: "When another test condition",
+							Then: []model.Then{
+								{
+									Text: "Then this test result C",
+								},
+								{
+									Text: "Then this test result D",
+								},
+							},
+						},
+					},
+				},
+				{
+					Text: "Given this test input B",
+					When: []model.When{
+						{
+							Text: "When this test condition",
+							Then: []model.Then{
+								{
+									Text: "Then this test result A",
+								},
+								{
+									Text: "Then this test result B",
+								},
+							},
+						},
+						{
+							Text: "When another test condition",
+							Then: []model.Then{
+								{
+									Text: "Then this test result C",
+								},
+								{
+									Text: "Then this test result D",
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+			{
 			name: "single Given, single When, single Then",
 			args: args{
 				input:
